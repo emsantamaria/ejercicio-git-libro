@@ -1,319 +1,253 @@
-# ejercicio-git-libro
-## clonando el repositorio
+# Tarea 6
+## Ejercicio 1: Etiquetar una versión
+### Crea una nueva etiqueta en la rama principal que marque el estado actual del repositorio como la versión 1.0.
 
-```
-https://github.com/emsantamaria/ejercicio-git-libro
-```
+´´´
+git tag 1.0.0
+´´´
 
-## ejercicio1
-### mostrar historial de cambios
+### Empuja la etiqueta al repositorio remoto.
 
-```
-commit 36c8689cadd3411a525730547a7140183c935dca (HEAD -> main, origin/main, origin/HEAD)
+´´´
+Enumerando objetos: 35, listo.
+Contando objetos: 100% (35/35), listo.
+Compresión delta usando hasta 4 hilos
+Comprimiendo objetos: 100% (30/30), listo.
+Escribiendo objetos: 100% (35/35), 4.28 KiB | 398.00 KiB/s, listo.
+Total 35 (delta 9), reusados 3 (delta 0), pack-reusados 0
+remote: Resolving deltas: 100% (9/9), done.
+To https://github.com/emsantamaria/ejercicio-git-libro
+ * [new tag]         1.0.0 -> 1.0.0
+ ´´´
+
+ ### Muestra la lista de etiquetas presentes en el repositorio usando git tag.
+
+ ´´´
+VirtualBox:~/ejercicio-git-libro$ git tag
+1.0.0
+´´´
+
+## Ejercicio 2: Revertir un commit
+### Haz un cambio sencillo en uno de los archivos (puedes agregar una línea de texto en el archivo capitulo1.txt), y realiza un commit con un mensaje apropiado, como "Agregada una línea en capítulo 1".
+
+´´´
+En la rama main
+Tu rama está actualizada con 'origin/main'.
+
+nada para hacer commit, el árbol de trabajo está limpio
+´´´
+
+### imagina que te has equivocado y no querías hacer ese cambio. Reviértelo usando git revert.
+
+´´´
+uso: git revert [<opciones>] <commit-ish>...
+   o: git revert <subcomando>
+
+    --quit                finalizar secuencia revert o cherry-pick
+    --continue            resumir secuencia revert o cherry-pick
+    --abort               cancelar secuencia revert o cherry-pick
+    --skip                saltar el commit actual y continuar
+    --cleanup <modo>      cómo quitar espacios y #comentarios de mensajes
+    -n, --no-commit       no realizar commit de forma automática
+    -e, --edit            editar el mensaje de commit
+    -s, --signoff         agregar una línea Signed-off-by al final
+    -m, --mainline <número-de-padre>
+                          seleccionar el padre principal
+    --rerere-autoupdate   actualizar el índice con la resolución de conflictos reutilizada si es posible
+    --strategy <estrategia>
+                          estrategia de fusión
+    -X, --strategy-option <opción>
+                          opción para estrategia de fusión
+    -S, --gpg-sign[=<key-id>]
+                          Firmar commit con GPG
+´´´
+
+### Muestra el historial de commits para verificar que el commit de reversión se ha realizado correctamente.
+
+´´´
+uso: git revert [<opciones>] <commit-ish>...
+   o: git revert <subcomando>
+
+    --quit                finalizar secuencia revert o cherry-pick
+    --continue            resumir secuencia revert o cherry-pick
+    --abort               cancelar secuencia revert o cherry-pick
+    --skip                saltar el commit actual y continuar
+    --cleanup <modo>      cómo quitar espacios y #comentarios de mensajes
+    -n, --no-commit       no realizar commit de forma automática
+    -e, --edit            editar el mensaje de commit
+    -s, --signoff         agregar una línea Signed-off-by al final
+    -m, --mainline <número-de-padre>
+                          seleccionar el padre principal
+    --rerere-autoupdate   actualizar el índice con la resolución de conflictos reutilizada si es posible
+    --strategy <estrategia>
+                          estrategia de fusión
+    -X, --strategy-option <opción>
+                          opción para estrategia de fusión
+    -S, --gpg-sign[=<key-id>]
+                          Firmar commit con GPG
+
+bae2@jpexposito-VirtualBox:~/ejercicio-git-libro$ git log commit
+fatal: argumento ambiguo 'commit': revisión desconocida o ruta fuera del árbol de trabajo.
+Usa '--' para separar las rutas de las revisiones, de esta manera:
+'git <comando> [<revisión>...] -- [<archivo>...]'
+bae2@jpexposito-VirtualBox:~/ejercicio-git-libro$ git log
+commit c0abc34e898b345eadacab699d99472bf9bc4c3a (HEAD -> main, tag: 1.0.0, origin/main, origin/HEAD, bibliografia)
 Author: emsantamaria <zeroenygma2@gmail.com>
-Date:   Mon Oct 14 21:04:32 2024 +0100
+Date:   Mon Oct 14 23:21:01 2024 +0100
 
-    Initial commit
-```
+    añadida nueva bibliografia
 
-### creando la carpeta capitulos y creando un archivo txt 
-
-```
-mkdir capitulos
- cat > capitulos/capitulo1.txt~Git es un sistema de control de versiones ideado por Linus Torvalds.
-```
-
-### añadiendo los cambios a la zona de intercambio temporal
-
-```
-git add capitulos/capitulo1.txt~
-git add README.md
-```
-
-### hacer commit 
-
-```
-[main 0ab28c5] añadido capitulo1
- 1 file changed, 3 insertions(+)
- create mode 100644 capitulos/capitulo1.txt~
-```
-
-### mostrar historial
-
-```
-commit 8a58657095394a2a041be7d9e6c31760cdf52498 (HEAD -> main)
+commit c0985592f7ba0a618bdf0e94f458c399e311d29e
+Merge: 5d187aa 601e429
 Author: emsantamaria <zeroenygma2@gmail.com>
-Date:   Mon Oct 14 22:17:38 2024 +0100
+Date:   Mon Oct 14 23:11:39 2024 +0100
+´´´
 
-    añadido capitulo1
+## Ejercicio 3: Aplicar cambios de otra rama con Cherry-pick
+### Crea una nueva rama llamada nueva-funcionalidad y haz un cambio en la rama, por ejemplo, crea un nuevo archivo capitulo5.txt con el siguiente contenido:   En este capítulo veremos cómo gestionar múltiples ramas en Git.
 
-commit 0ab28c53e718b2c22542304ab2e0994fca8598f0
-Author: emsantamaria <zeroenygma2@gmail.com>
-Date:   Mon Oct 14 22:14:00 2024 +0100
+´´´
+git branch nueva-funcionalidad
+git checkout nueva-funcionalidad 
+cat > capitulo5.txt
+En este capítulo veremos cómo gestionar múltiples ramas en Git.
+´´´
 
-    añadido capitulo1
+### Realiza un commit del cambio.
 
-commit 36c8689cadd3411a525730547a7140183c935dca (origin/main, origin/HEAD)
-Author: emsantamaria <zeroenygma2@gmail.com>
-```
+´´´
+git add capitulo5.txt 
+nueva-funcionalidad 8c2c798] creada nueva branch con capitulos5.txt
+ 1 file changed, 1 insertion(+)
+ create mode 100644 capitulo5.txt
+´´´
 
-## ejercicio2
-### crear el fichero capitulo2.txt
+### Vuelve a la rama main y usa git cherry-pick para aplicar el commit de la rama nueva-funcionalidad en main.
 
-```
-cat > capitulos/capitulo2.txt
- El flujo de trabajo básico con Git consiste en:
- 1- Hacer cambios en el repositorio.
- 2- Añadir los cambios a la zona de intercambio temporal.
- 3- Hacer un commit de los cambios.
-```
+´´´
+git checkout main
+--quit                finalizar secuencia revert o cherry-pick
+    --continue            resumir secuencia revert o cherry-pick
+    --abort               cancelar secuencia revert o cherry-pick
+    --skip                saltar el commit actual y continuar
+    --cleanup <modo>      cómo quitar espacios y #comentarios de mensajes
+    -n, --no-commit       no realizar commit de forma automática
+    -e, --edit            editar el mensaje de commit
+    -s, --signoff         agregar una línea Signed-off-by al final
+    -m, --mainline <número-de-padre>
+                          seleccionar el padre principal
+    --rerere-autoupdate   actualizar el índice con la resolución de conflictos reutilizada si es posible
+    --strategy <estrategia>
+                          estrategia de fusión
+    -X, --strategy-option <opción>
+                          opción para estrategia de fusión
+    -S, --gpg-sign[=<key-id>]
+                          Firmar commit con GPG
+    -x                    adjuntar el nombre del commit
+    --ff                  permitir fast-forward
+    --allow-empty         preservar commits iniciales vacíos
+    --allow-empty-message
+                          permitir commits con mensajes vacíos
+    --keep-redundant-commits
+                          mantener commits redundantes, vacíos
+´´´
 
-### añadir los cambios
+## Ejercicio 4: Comparar ramas
+### Haz un cambio en la rama main (puedes modificar el archivo README.md agregando una breve descripción).
 
-```
-git add capitulos/capitulo2.txt
-git add README.md
-```
+´´´
+creada breve descripcion
+´´´
 
-### hacer el commit
+## Usa el comando git diff para comparar los cambios entre la rama main y la rama nueva-funcionalidad.
 
-```
-[main 3164437] añadido capitulo2
- 2 files changed, 31 insertions(+), 1 deletion(-)
- create mode 100644 capitulos/capitulo2.txt
-```
-
-### mostrar diferencias
-
-```
-diff --git a/capitulos/capitulo2.txt b/capitulos/capitulo2.txt
+´´´
+diff --git a/capitulo5.txt b/capitulo5.txt
 new file mode 100644
-index 0000000..4abf557
+index 0000000..be46439
 --- /dev/null
-+++ b/capitulos/capitulo2.txt
-```
++++ b/capitulo5.txt
+@@ -0,0 +1 @@
+´´´
 
-## ejercicio3
-### crear capitulo 3
+## Ejercicio 5: Resolver conflictos de fusión
+### Crea un conflicto de fusión modificando el mismo archivo en ambas ramas (main y nueva-funcionalidad).
 
-```
-cat > capitulos/capitulo3.txt
-  
-Git permite la creación de ramas lo que permite tener distintas versiones del mismo proyecto y trabajar de manera simultanea en ellas.
-```
+´´´
+Ya está actualizado.
+´´´
 
-### añadiendo 
+### Intenta hacer un merge de la rama nueva-funcionalidad en main y resuelve el conflicto manualmente.
 
-```
-git add capitulo3.tx
-```
-
-### mostrar historial
-
-```
-commit 3164437a0d22db03816084dc7369d6fdef4ce465 (HEAD -> main)
-Author: emsantamaria <zeroenygma2@gmail.com>
-Date:   Mon Oct 14 22:35:46 2024 +0100
-
-    añadido capitulo2
-
-commit 8a58657095394a2a041be7d9e6c31760cdf52498
-Author: emsantamaria <zeroenygma2@gmail.com>
-Date:   Mon Oct 14 22:17:38 2024 +0100
-
-    añadido capitulo1
-
-commit 0ab28c53e718b2c22542304ab2e0994fca8598f0
-Author: emsantamaria <zeroenygma2@gmail.com>
-Date:   Mon Oct 14 22:14:00 2024 +0100
-
-    añadido capitulo1
-
-commit 36c8689cadd3411a525730547a7140183c935dca (origin/main, origin/HEAD)
-Author: emsantamaria <zeroenygma2@gmail.com>
-Date:   Mon Oct 14 21:04:32 2024 +0100
-```
-
-## ejercicio4
-### creando indice
-
-```
-cat > indice.txt
-```
-
-### añadir 
-
-```
-git add indice.txt
-```
-
-### echo
-```
-echo "Indice de los cápitulos, con conceptos avanzados de git" >> indice.txt
-```
-### commit
-```
-[main ac5d875] se crea el indice
- 2 files changed, 2 insertions(+)
- create mode 100644 capitulos/capitulo3.txt
- create mode 100644 indice.txt
-```
-### mostrar quien ha hechos cambios
-```
-ccbeab60        (emsantamaria   2024-10-14 22:54:20 +0100       1)Indice de los cápitulos, con conceptos avanzados de git
-```
-## ejercicio5
-### crear una nueva rama
-```
-bibliografia        ccbeab6 se crea el indice
-* main                ccbeab6 [adelante 5] se crea el indice
-  remotes/origin/HEAD -> origin/main
-  remotes/origin/main 36c8689 Initial commit
-```
-## ejercicio6
-### añadir capitulo4
-```
-cat > capitulos/capitulo4.txt
-En este capítulo veremos cómo usar GitHub para alojar repositorios en remoto.
-```
-### hacer commit 
-```
-git add capitulos/capitulo4.txt 
-[main 5d187aa] añadido capitulo4
- 1 file changed, 1 insertion(+)
- create mode 100644 capitulos/capitulo4.txt
-```
-### mostrar la historia del repositorio
-```
-5d187aa (HEAD -> main) añadido capitulo4
-* ccbeab6 (bibliografia) se crea el indice
-* ac5d875 se crea el indice
-* 3164437 añadido capitulo2
-* 8a58657 añadido capitulo1
-* 0ab28c5 añadido capitulo1
-* 36c8689 (origin/main, origin/HEAD) Initial commit
-```
-## capitulo7
-### cambiar a la rama bibliografia
-```
-git checkout bibliografia 
-Cambiado a rama 'bibliografia'
-```
-### crear el fichero bibliografia.txt
-```
-cat > bibliografia.txt
-- Chacon, S. and Straub, B. Pro Git. Apress
-```
-### añadir los cambios y hacer commit
-```
-git add bibliografia.txt 
- git commit -m"añadido bibliografia.txt"
-[bibliografia 601e429] añadido bibliografia.txt
- 1 file changed, 1 insertion(+)
- create mode 100644 bibliografia.txt
-```
-### mostrar historial
-```
-601e429 (HEAD -> bibliografia) añadido bibliografia.txt
-| * 5d187aa (main) añadido capitulo4
-|/  
-* ccbeab6 se crea el indice
-* ac5d875 se crea el indice
-* 3164437 añadido capitulo2
-* 8a58657 añadido capitulo1
-* 0ab28c5 añadido capitulo1
-* 36c8689 (origin/main, origin/HEAD) Initial commit
-```
-## ejerrcicio 8
-### fusionar rama bibliografia con main
-```
-Merge made by the 'ort' strategy.
- bibliografia.txt | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 bibliografia.txt
-```
-### historial
-```
-c098559 (HEAD -> main) Merge branch 'bibliografia'
-|\  
-| * 601e429 (bibliografia) añadido bibliografia.txt
-* | 5d187aa añadido capitulo4
-|/  
-* ccbeab6 se crea el indice
-* ac5d875 se crea el indice
-* 3164437 añadido capitulo2
-* 8a58657 añadido capitulo1
-* 0ab28c5 añadido capitulo1
-* 36c8689 (origin/main, origin/HEAD) Initial commit
-```
-### eliminar rama bibliografia
-```
-git branch -d bibliografia 
-Eliminada la rama bibliografia (era 601e429).
-```
-### historial
-```
- c098559 (HEAD -> main) Merge branch 'bibliografia'
-|\  
-| * 601e429 añadido bibliografia.txt
-* | 5d187aa añadido capitulo4
-|/  
-* ccbeab6 se crea el indice
-* ac5d875 se crea el indice
-* 3164437 añadido capitulo2
-* 8a58657 añadido capitulo1
-* 0ab28c5 añadido capitulo1
-* 36c8689 (origin/main, origin/HEAD) Initial commit
-```
-## ejercicio 9
-### crear la rama bibliografia
-```
-git branch bibliografia
-```
-### ir a la rama bibliografia
-```
-git checkout bibliografia 
-Cambiado a rama 'bibliografia'
-```
-### crear bibliografia.txt
-```
-cat > bibliografia.txt
-- Scott Chacon and Ben Straub. Pro Git. Apress.
-- Ryan Hodson. Ry's Git Tutorial. Smashwords (2014)
-```
-### cambiar a main
-```
-it checkout main 
-Cambiado a rama 'main'
-```
-### Añadir los cambios a la zona de intercambio temporal y hacer un commit con el mensaje “Añadida nueva referencia bibliográfica.”
-```
- git add bibliografia.txt 
-git commit -m"añadida nueva bibliografia"
-[bibliografia c0abc34] añadida nueva bibliografia
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-```
-### Fusionar la rama bibliografía con la rama main.
-```
-git merge bibliografia 
-Actualizando c098559..c0abc34
+´´´
+ Actualizando c0abc34..8c2c798
 Fast-forward
- bibliografia.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-```
-### mostrar historial
-```
- c0abc34 (HEAD -> main, bibliografia) añadida nueva bibliografia
-*   c098559 Merge branch 'bibliografia'
-|\  
-| * 601e429 añadido bibliografia.txt
-* | 5d187aa añadido capitulo4
-|/  
-* ccbeab6 se crea el indice
-* ac5d875 se crea el indice
-* 3164437 añadido capitulo2
-* 8a58657 añadido capitulo1
-* 0ab28c5 añadido capitulo1
-* 36c8689 (origin/main, origin/HEAD) Initial commit
-```
+ capitulo5.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 capitulo5.txt
+´´´
+
+### Realiza un commit una vez resuelto el conflicto, y muestra la historia del repositorio.
+
+´´´
+main 08ae379] resuelto conflicto
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 capitulo2.txt
+´´´
+
+## Ejercicio 6: Revertir un merge
+### Realiza un merge de la rama nueva-funcionalidad en la rama main.
+
+´´´
+Ya está actualizado.
+´´´
+
+### Ahora, imagina que no querías hacer esa fusión. Usa git revert para revertir el merge.
+
+´´´
+git revert -m"revertido merge"
+uso: git revert [<opciones>] <commit-ish>...
+   o: git revert <subcomando>
+
+    --quit                finalizar secuencia revert o cherry-pick
+    --continue            resumir secuencia revert o cherry-pick
+    --abort               cancelar secuencia revert o cherry-pick
+    --skip                saltar el commit actual y continuar
+    --cleanup <modo>      cómo quitar espacios y #comentarios de mensajes
+    -n, --no-commit       no realizar commit de forma automática
+    -e, --edit            editar el mensaje de commit
+    -s, --signoff         agregar una línea Signed-off-by al final
+    -m, --mainline <número-de-padre>
+                          seleccionar el padre principal
+    --rerere-autoupdate   actualizar el índice con la resolución de conflictos reutilizada si es posible
+    --strategy <estrategia>
+                          estrategia de fusión
+    -X, --strategy-option <opción>
+                          opción para estrategia de fusión
+    -S, --gpg-sign[=<key-id>]
+                          Firmar commit con GPG
+´´´
+
+## Ejercicio 7: Eliminar una etiqueta
+### Borra la etiqueta v1.0 localmente y en el repositorio remoto.
+
+´´´
+git tag -d
+´´´
+
+## Ejercicio 8: Restablecer un commit (Reset)
+### Haz un commit en la rama main y luego restablece el estado del repositorio al commit anterior utilizando git reset --hard.
+
+´´´
+En la rama main
+Tu rama está adelantada a 'origin/main' por 2 commits.
+  (usa "git push" para publicar tus commits locales)
+
+nada para hacer commit, el árbol de trabajo está limpio
+´´´
+
+### Verifica el estado del repositorio después del reset.
+
+´´´
+HEAD está ahora en 08ae379 resuelto conflicto
+´´´
